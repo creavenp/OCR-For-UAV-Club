@@ -100,20 +100,12 @@ def ocr_int(i, box, image):
     grayscale = cv2.cvtColor(crop, cv2.COLOR_BGR2GRAY)
     text = 0
 
-    # Convert to a binary image using adaptive thresholding.
-    # High value for the 5th parameter = Thick digits.
-    # High value for the 6th parameter = Reduce noise.
-    #ret, threshold = cv2.adaptiveThreshold(grayscale, 225,
-    #                              cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
-    #                                 cv2.THRESH_BINARY, 110, 8)
+    # Convert to a binary image using adaptive thresholding
     ret, threshold = cv2.threshold(grayscale, 210, 255, cv2.THRESH_BINARY)
 
-    # if DEBUGH:
-    #     cv2.imwrite(r'C:\Users\patri\PycharmProjects\ImageDetection\tmp\thresh_' + str(i) + ".bmp", threshold)
     if DEBUGH:
         cv2.imwrite(r'C:\Users\patri\PycharmProjects\ImageDetection\tmp\thresh_' + str(i) + ".bmp", threshold)
 
-    #threshold = cv2.cvtColor(threshold, cv2.COLOR_BGR2RGB)
     text = pytesseract.image_to_string(threshold, lang='eng', config='--psm 6')
     print(text)
 
@@ -133,7 +125,7 @@ def ocr(boxes, image):
 
     return None
 
-
+# run the scripts
 image = cv2.imread('DJI_0001.JPG')
 
 contours = get_contours(image)
